@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/codemirror.css'
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
