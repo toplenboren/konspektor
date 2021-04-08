@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import {useState} from "react";
 import ReactMarkdown from "react-markdown";
 import dynamic from "next/dynamic";
@@ -9,15 +8,20 @@ const CodeMirrorWrapper = dynamic(() => import("../components/CodeMirrorWrapper"
 
 export default function Home() {
 
-    const [text, setText] = useState('')
+    const [text, setText] = useState('## I love to code')
 
     return (
         <>
+            <Head>
+                <title>Конспектор</title>
+            </Head>
             <section className={'app-container'}>
                 <h1>Конспектор</h1>
                 <section className={'editor-and-preview-container'}>
-                    <CodeMirrorWrapper onChange={setText}/>
-                    <section className={'react-markdown__container'}>
+                    <section className={'editor__container'}>
+                        <CodeMirrorWrapper startValue={text} onChange={setText}/>
+                    </section>
+                    <section className={'preview__container'}>
                         <ReactMarkdown>
                             {text}
                         </ReactMarkdown>
@@ -31,8 +35,13 @@ export default function Home() {
                       .editor-and-preview-container {
                            display: flex;
                       }
+                      
+                      .editor__container {
+                           height: 90vh;
+                           width: 50vw;
+                      }
                         
-                      .react-markdown__container {
+                      .preview__container {
                            overflow: scroll;
                            height: 90vh;
                            width: 50vw;
