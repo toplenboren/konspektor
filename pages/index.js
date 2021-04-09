@@ -57,7 +57,6 @@ export default function Home() {
     }
 
     const _downloadText = () => {
-
         const today = new Date();
         const dd = String(today.getDate()).padStart(2, '0');
         const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -93,12 +92,15 @@ export default function Home() {
                     </ButtonGroup>
                     </section>
                     <Text h4 style={{marginBottom: 0}}>Конспектор</Text>
-                    <ButtonGroup ghost size={'small'}>
-                        <Button iconRight={<Copy/>} onClick={() => {toast('success'); navigator.clipboard.writeText(text);}}/>
-                        <Button iconRight={<Download/>} onClick={() => _downloadText()}>
-                            Скачать файл
-                        </Button>
-                    </ButtonGroup>
+                    <section>
+
+                        <ButtonGroup ghost size={'small'}>
+                            <Button iconRight={<Copy/>} onClick={() => {toast('success'); navigator.clipboard.writeText(text);}}/>
+                            <Button iconRight={<Download/>} onClick={() => _downloadText()}>
+                                Скачать файл
+                            </Button>
+                        </ButtonGroup>
+                    </section>
                 </section>
                 <Divider/>
                 <section className={'editor-and-preview-container'}>

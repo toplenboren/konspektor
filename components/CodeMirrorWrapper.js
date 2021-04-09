@@ -3,7 +3,7 @@ import React from "react";
 
 require('codemirror/mode/gfm/gfm')
 require('codemirror/addon/mode/overlay')
-require('codemirror/theme/blackboard.css')
+require('codemirror/theme/abcdef.css')
 require('../utils/spellcheck')
 
 function CodeMirrorWrapper({onChange, startValue}) {
@@ -15,7 +15,7 @@ function CodeMirrorWrapper({onChange, startValue}) {
                 value={startValue}
                 options={{
                     mode: 'spellcheck',
-                    theme: 'blackboard',
+                    theme: 'abcdef',
                     lineNumbers: true,
                     firstLineNumber: 0,
                 }}
@@ -29,6 +29,15 @@ function CodeMirrorWrapper({onChange, startValue}) {
                 }
             `}</style>
             <style jsx global>{`
+                .cm-s-abcdef.CodeMirror {
+                    background: black;
+                }
+                
+                .CodeMirror-gutters {
+                    background: black !important;
+                    border-right: 2px solid #292f34 !important;
+                }
+                
                 .cm-spell-error {
                     background-color: #4A2525;
                     border-radius: 2px;
