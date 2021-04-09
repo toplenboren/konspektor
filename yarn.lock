@@ -39,6 +39,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@geist-ui/react-icons@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@geist-ui/react-icons/-/react-icons-1.0.1.tgz#5da112bbc98216bf05da3aabbd7d21594440b209"
+  integrity sha512-/phre1NwXT0Mrxcq3yb+KksJ16/ykptgxI7+jh5pmDZfxnIMPlBWFBGDK0yw96oi752Wuo24X6+tkWjVe/g5Bg==
+
 "@geist-ui/react@^2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@geist-ui/react/-/react-2.1.4.tgz#52c8d482ef06f5da62488dcdc92e4f950a16b915"
@@ -976,6 +981,11 @@ inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
+
+inter-ui@^3.18.0:
+  version "3.18.0"
+  resolved "https://registry.yarnpkg.com/inter-ui/-/inter-ui-3.18.0.tgz#7e231bd09c3d0cf949645ad42e4a6375abe294e9"
+  integrity sha512-3Q1saEINwBSkgsA2ZzyQGbWoOZeIC9DHlNzC8qdDmZJpj6v21gJwewaC2hcO45AYnz5K5HgBN1jAvoIVW+GhGQ==
 
 is-alphabetical@^1.0.0:
   version "1.0.4"
