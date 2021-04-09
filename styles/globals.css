@@ -1,3 +1,7 @@
+:root {
+  color-scheme: dark; /* both supported */
+}
+
 html,
 body {
   padding: 0;

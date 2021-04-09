@@ -5,6 +5,8 @@ require('codemirror/mode/gfm/gfm')
 require('codemirror/addon/mode/overlay')
 require('codemirror/theme/abcdef.css')
 require('../utils/spellcheck')
+require('codemirror/addon/scroll/simplescrollbars')
+require('codemirror/addon/scroll/simplescrollbars.css')
 
 function CodeMirrorWrapper({onChange, startValue}) {
 
@@ -29,6 +31,10 @@ function CodeMirrorWrapper({onChange, startValue}) {
                 }
             `}</style>
             <style jsx global>{`
+                .CodeMirror {
+                    height: 100%;
+                }
+            
                 .cm-s-abcdef.CodeMirror {
                     background: black;
                 }

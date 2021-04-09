@@ -45,13 +45,13 @@ export default function Home() {
     const _getEditorAndRenderClassNamesByDisplayMode = () => {
         switch (displayMode) {
             case DISPLAY_MODES.both: {
-                return {renderer: 'w-half',editor: 'w-half'}
+                return {renderer: 'h-full w-half',editor: 'h-full w-half'}
             }
             case DISPLAY_MODES.edit: {
-                return {renderer: 'display-none',editor: 'w-full'}
+                return {renderer: 'display-none',editor: 'h-full w-full'}
             }
             case DISPLAY_MODES.render: {
-                return {renderer: 'w-full',editor: 'display-none'}
+                return {renderer: 'h-full w-full',editor: 'display-none'}
             }
         }
     }
@@ -79,38 +79,39 @@ export default function Home() {
             <Head>
                 <title>Конспектор</title>
             </Head>
-            <Page size={wideMode ? 'what' : 'large'} dotBackdrop={true} className={'app-container'}>
-                <section className={'header'}>
-                    <section>
-                    <ButtonGroup ghost size="small">
-                        <Button iconRight={<Edit/>} onClick={() => setDisplayMode(DISPLAY_MODES.edit)}/>
-                        <Button iconRight={<Columns/>} onClick={() => setDisplayMode(DISPLAY_MODES.both)}/>
-                        <Button iconRight={<Image/>} onClick={() => setDisplayMode(DISPLAY_MODES.render)}/>
-                    </ButtonGroup>
-                    <ButtonGroup ghost size={'small'}>
-                        <Button  iconRight={<Monitor/>} onClick={() => setWideMode(!wideMode)}/>
-                    </ButtonGroup>
-                    </section>
-                    <Text h4 style={{marginBottom: 0}}>Конспектор</Text>
-                    <section>
-
-                        <ButtonGroup ghost size={'small'}>
-                            <Button iconRight={<Copy/>} onClick={() => {toast('success'); navigator.clipboard.writeText(text);}}/>
-                            <Button iconRight={<Download/>} onClick={() => _downloadText()}>
-                                Скачать файл
-                            </Button>
+            <Page style={{height: '100vh'}} size={wideMode ? 'what' : 'large'}>
+                <section className={'app-container'}>
+                    <section className={'header'}>
+                        <section>
+                        <ButtonGroup ghost size="small">
+                            <Button iconRight={<Edit/>} onClick={() => setDisplayMode(DISPLAY_MODES.edit)}/>
+                            <Button iconRight={<Columns/>} onClick={() => setDisplayMode(DISPLAY_MODES.both)}/>
+                            <Button iconRight={<Image/>} onClick={() => setDisplayMode(DISPLAY_MODES.render)}/>
                         </ButtonGroup>
+                        <ButtonGroup ghost size={'small'}>
+                            <Button  iconRight={<Monitor/>} onClick={() => setWideMode(!wideMode)}/>
+                        </ButtonGroup>
+                        </section>
+                        <Text h4 style={{marginBottom: 0}}>Конспектор</Text>
+                        <section>
+                            <ButtonGroup ghost size={'small'}>
+                                <Button iconRight={<Copy/>} onClick={() => {toast('success'); navigator.clipboard.writeText(text);}}/>
+                                <Button iconRight={<Download/>} onClick={() => _downloadText()}>
+                                    Скачать файл
+                                </Button>
+                            </ButtonGroup>
+                        </section>
                     </section>
-                </section>
-                <Divider/>
-                <section className={'editor-and-preview-container'}>
-                    <section className={'transition ' + _getEditorAndRenderClassNamesByDisplayMode().editor}>
-                        <CodeMirrorWrapper startValue={text} onChange={setText}/>
-                    </section>
-                    <section className={'p-sm transition ' + _getEditorAndRenderClassNamesByDisplayMode().renderer}>
-                        <ReactMarkdown plugins={[[gfm, {singleTilde: false}]]}>
-                            {text}
-                        </ReactMarkdown>
+                    <Divider/>
+                    <section className={'editor-and-preview-container'}>
+                        <section className={'transition ' + _getEditorAndRenderClassNamesByDisplayMode().editor}>
+                            <CodeMirrorWrapper startValue={text} onChange={setText}/>
+                        </section>
+                        <section className={'p-sm transition ' + _getEditorAndRenderClassNamesByDisplayMode().renderer}>
+                            <ReactMarkdown plugins={[[gfm, {singleTilde: false}]]}>
+                                {text}
+                            </ReactMarkdown>
+                        </section>
                     </section>
                 </section>
                 <style jsx>{`
@@ -120,11 +121,20 @@ export default function Home() {
                         align-items: center;
                     }
                     
+                    .app-container {
+                        display: flex;
+                        flex-direction: column;
+                        
+                        height: 100%;
+                        max-height: 100vh;
+                    }
+                                        
                     .display-none {
                         display: none;
                     }
 
                     .editor-and-preview-container {
+                        flex-grow: 1;
                         display: flex;
                     }
 
@@ -141,11 +151,15 @@ export default function Home() {
                     }
 
                     .h-full {
-                        height: 100vh;
+                        height: 100%;
                     }
                     
                     .p-sm {
                         padding: 10px;
+                    }
+                    
+                    .scrolls-y {
+                        overflow-y: scroll;
                     }
                 `}</style>
             </Page>
