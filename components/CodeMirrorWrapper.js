@@ -20,6 +20,7 @@ function CodeMirrorWrapper({onChange, startValue}) {
                     firstLineNumber: 0,
                 }}
                 onChange={(editor, data, value) => onChange(value)}
+                autoCursor={false}
             />
             <style jsx>{`
                 .editor {
