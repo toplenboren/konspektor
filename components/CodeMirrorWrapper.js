@@ -1,8 +1,9 @@
 import {UnControlled as CodeMirror} from "react-codemirror2";
 import React, {useState} from "react";
 
-const gfm = require('codemirror/mode/gfm/gfm')
-const overlay = require('codemirror/addon/mode/overlay')
+require('codemirror/mode/gfm/gfm')
+require('codemirror/addon/mode/overlay')
+require('../utils/spellcheck')
 const Typo = require("typo-js");
 
 function CodeMirrorWrapper({onChange, startValue}) {
@@ -22,38 +23,12 @@ function CodeMirrorWrapper({onChange, startValue}) {
             className={'editor'}
             value={startValue}
             options={{
-                mode: 'spellchecker',
-                backdrop: 'gfm',
+                mode: 'spellcheck',
                 theme: 'default',
                 lineNumbers: true,
                 firstLineNumber: 0,
             }}
             editorDidMount={_handleEditorMount}
-
-            //onCursorActivity={_validateLine}
-            defineMode={{name:'spellchecker', fn: function(config, parserConfig) {
-                return {
-                    token: function (stream) {
-                        var ch = stream.peek();
-                        var word = "";
-
-                        if (RX_WORD.includes(ch)) {
-                            stream.next();
-                            return null;
-                        }
-
-                        while ((ch = stream.peek()) != null && !RX_WORD.includes(ch)) {
-                            word += ch;
-                            stream.next();
-                        }
-
-                        if (dictionary && !dictionary.check(word))
-                            return TEXT_VALIDATION_CLASS; // CSS class: cm-spell-error
-
-                        return null;
-                    }
-                }
-            }}}
         />
         <style jsx>{`
             .editor {
@@ -62,7 +37,7 @@ function CodeMirrorWrapper({onChange, startValue}) {
             }
         `}</style>
         <style jsx global>{`
-            .cm-${TEXT_VALIDATION_CLASS} {
+            .cm-spell-error {
                 background-color: red;
             }
         `}</style>
