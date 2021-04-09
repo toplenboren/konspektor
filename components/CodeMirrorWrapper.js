@@ -3,6 +3,7 @@ import React from "react";
 
 require('codemirror/mode/gfm/gfm')
 require('codemirror/addon/mode/overlay')
+require('codemirror/lib/codemirror.css')
 require('codemirror/theme/abcdef.css')
 require('../utils/spellcheck')
 require('codemirror/addon/scroll/simplescrollbars')

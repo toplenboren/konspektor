@@ -3,9 +3,7 @@ export const downloadText = (fileContent) => {
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
-
     const date = mm + '-' + dd + '-' + yyyy;
-
     const fileName = 'lect-' + date + '.md'
     const element = document.createElement("a");
     const file = new Blob([fileContent],

@@ -1,5 +1,4 @@
 import '../styles/globals.css'
-import '../styles/codemirror.css'
 import 'inter-ui/inter.css'
 import { GeistProvider, CssBaseline } from '@geist-ui/react'
 
