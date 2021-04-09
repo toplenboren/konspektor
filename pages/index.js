@@ -1,11 +1,10 @@
 import Head from 'next/head'
 import {useEffect, useState} from "react";
-import ReactMarkdown from "react-markdown";
 import dynamic from "next/dynamic";
 import {Copy, Download, Columns, Image, Edit, Monitor} from '@geist-ui/react-icons'
 import {Button, ButtonGroup, Divider, Page, Text, useToasts} from '@geist-ui/react'
 import {downloadText, copyText} from "../utils/browser.utils";
-const gfm = require('remark-gfm')
+import ReactMarkdownWrapper from "../components/ReactMarkdownWrapper";
 
 const CodeMirrorWrapper = dynamic(() => import("../components/CodeMirrorWrapper"), {
     ssr: false,
@@ -89,9 +88,7 @@ export default function Home() {
                             <CodeMirrorWrapper startValue={text} onChange={(newText) => {window.localStorage.setItem(BACKUP_TEXT_NAME, newText); setText(newText)}}/>
                         </section>
                         <section className={'p-sm transition ' + _getEditorAndRenderClassNamesByDisplayMode().renderer}>
-                            <ReactMarkdown plugins={[[gfm, {singleTilde: false}]]}>
-                                {text}
-                            </ReactMarkdown>
+                            <ReactMarkdownWrapper text={text}/>
                         </section>
                     </section>
                 </section>
