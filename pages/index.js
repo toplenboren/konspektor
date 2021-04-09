@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import dynamic from "next/dynamic";
 import {Copy, Download, Columns, Image, Edit, Monitor} from '@geist-ui/react-icons'
 import {Button, ButtonGroup, Divider, Page, Text, useToasts} from '@geist-ui/react'
+import {downloadText, copyText} from "../utils/browser.utils";
 const gfm = require('remark-gfm')
 
 const CodeMirrorWrapper = dynamic(() => import("../components/CodeMirrorWrapper"), {
@@ -13,6 +14,8 @@ const CodeMirrorWrapper = dynamic(() => import("../components/CodeMirrorWrapper"
 
 export default function Home() {
 
+    const BACKUP_TEXT_NAME = 'k0nsp3kt0r__t3XXXt'
+
     const DISPLAY_MODES = {
         'edit':'edit',
         'both':'both',
@@ -20,7 +23,7 @@ export default function Home() {
     }
 
     const [text, setText] = useState('## I love to code')
-    const [displayMode, setDisplayMode] = useState(DISPLAY_MODES.both)
+    const [displayMode, setDisplayMode] = useState(DISPLAY_MODES.edit)
     const [wideMode, setWideMode] = useState(false)
 
     const [, setToast] = useToasts()
@@ -30,15 +33,9 @@ export default function Home() {
     })
 
     useEffect(() => {
-        const BACKUP_NAME = 'k0nsp3kt0r__t3XXXt'
-
-        const backup = window.localStorage.getItem(BACKUP_NAME)
-        if (backup) {
-
-        }
-
-        return () => {
-            window.localStorage.setItem(BACKUP_NAME, text);
+        const backup_text = window.localStorage.getItem(BACKUP_TEXT_NAME)
+        if (backup_text) {
+            setText(backup_text)
         }
     }, [])
 
@@ -56,23 +53,7 @@ export default function Home() {
         }
     }
 
-    const _downloadText = () => {
-        const today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const yyyy = today.getFullYear();
 
-        const date = mm + '-' + dd + '-' + yyyy;
-
-        const fileName = 'lect-' + date + '.md'
-        const element = document.createElement("a");
-        const file = new Blob([text],
-            {type: 'text/plain;charset=utf-8'});
-        element.href = URL.createObjectURL(file);
-        element.download = fileName;
-        document.body.appendChild(element);
-        element.click();
-    }
 
     return (
         <>
@@ -89,14 +70,14 @@ export default function Home() {
                             <Button iconRight={<Image/>} onClick={() => setDisplayMode(DISPLAY_MODES.render)}/>
                         </ButtonGroup>
                         <ButtonGroup ghost size={'small'}>
-                            <Button  iconRight={<Monitor/>} onClick={() => setWideMode(!wideMode)}/>
+                            <Button iconRight={<Monitor/>} onClick={() => setWideMode(!wideMode)}/>
                         </ButtonGroup>
                         </section>
                         <Text h4 style={{marginBottom: 0}}>Конспектор</Text>
                         <section>
                             <ButtonGroup ghost size={'small'}>
-                                <Button iconRight={<Copy/>} onClick={() => {toast('success'); navigator.clipboard.writeText(text);}}/>
-                                <Button iconRight={<Download/>} onClick={() => _downloadText()}>
+                                <Button iconRight={<Copy/>} onClick={() => {toast('success'); copyText(text)}}/>
+                                <Button iconRight={<Download/>} onClick={() => downloadText(text)}>
                                     Скачать файл
                                 </Button>
                             </ButtonGroup>
@@ -105,7 +86,7 @@ export default function Home() {
                     <Divider/>
                     <section className={'editor-and-preview-container'}>
                         <section className={'transition ' + _getEditorAndRenderClassNamesByDisplayMode().editor}>
-                            <CodeMirrorWrapper startValue={text} onChange={setText}/>
+                            <CodeMirrorWrapper startValue={text} onChange={(newText) => {window.localStorage.setItem(BACKUP_TEXT_NAME, newText); setText(newText)}}/>
                         </section>
                         <section className={'p-sm transition ' + _getEditorAndRenderClassNamesByDisplayMode().renderer}>
                             <ReactMarkdown plugins={[[gfm, {singleTilde: false}]]}>
