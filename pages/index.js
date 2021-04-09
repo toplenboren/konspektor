@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import {useEffect, useState} from "react";
 import dynamic from "next/dynamic";
-import {Copy, Download, Columns, Image, Edit, Monitor} from '@geist-ui/react-icons'
-import {Button, ButtonGroup, Divider, Page, Text, useToasts} from '@geist-ui/react'
+import {Copy, Download, Columns, Image, Edit, Monitor, Trash} from '@geist-ui/react-icons'
+import {Button, ButtonGroup, Divider, Modal, Page, Text, useModal, useToasts} from '@geist-ui/react'
 import {downloadText, copyText} from "../utils/browser.utils";
 import ReactMarkdownWrapper from "../components/ReactMarkdownWrapper";
 
@@ -15,15 +15,18 @@ export default function Home() {
 
     const BACKUP_TEXT_NAME = 'k0nsp3kt0r__t3XXXt'
 
+    const START_TEXT = '# I love React'
+
     const DISPLAY_MODES = {
         'edit':'edit',
         'both':'both',
         'render':'render'
     }
 
-    const [text, setText] = useState('## I love to code')
+    const [text, setText] = useState(START_TEXT)
     const [displayMode, setDisplayMode] = useState(DISPLAY_MODES.edit)
     const [wideMode, setWideMode] = useState(false)
+    const { visible, setVisible, bindings } = useModal()
 
     const [, setToast] = useToasts()
     const toast = type => setToast({
@@ -37,6 +40,11 @@ export default function Home() {
             setText(backup_text)
         }
     }, [])
+
+    const _resetApp = () => {
+        window.localStorage.setItem(BACKUP_TEXT_NAME, START_TEXT)
+        setText(START_TEXT)
+    }
 
     const _getEditorAndRenderClassNamesByDisplayMode = () => {
         switch (displayMode) {
@@ -78,6 +86,17 @@ export default function Home() {
                                     Скачать файл
                                 </Button>
                             </ButtonGroup>
+                            <ButtonGroup type={'alert'} size={'small'}>
+                                <Modal {...bindings}>
+                                    <Modal.Title>Привет</Modal.Title>
+                                    <Modal.Content>
+                                        <Text style={{textAlign:'center'}}>Точно хочешь все удалить и начать сначала?</Text>
+                                    </Modal.Content>
+                                    <Modal.Action passive onClick={() => setVisible(false)}>Назад</Modal.Action>
+                                    <Modal.Action type={'warning'} onClick={() => {setVisible(false); _resetApp()}}>Удалить</Modal.Action>
+                                </Modal>
+                                <Button iconRight={<Trash/>} onClick={() => {setVisible(true)}}/>
+                            </ButtonGroup>
                         </section>
                     </section>
                     <Divider/>
@@ -96,15 +115,15 @@ export default function Home() {
                         justify-content: space-between;
                         align-items: center;
                     }
-                    
+
                     .app-container {
                         display: flex;
                         flex-direction: column;
-                        
+
                         height: 100%;
                         max-height: 100vh;
                     }
-                                        
+
                     .display-none {
                         display: none;
                     }
@@ -129,11 +148,11 @@ export default function Home() {
                     .h-full {
                         height: 100%;
                     }
-                    
+
                     .p-sm {
                         padding: 10px;
                     }
-                    
+
                     .scrolls-y {
                         overflow-y: scroll;
                     }
