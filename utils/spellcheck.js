@@ -15,6 +15,11 @@
         const Typo = require('typo-js')
         const dictionary = new Typo("en_US", null, null, {dictionaryPath: 'dictionaries'})
         const RX_WORD = "!\"#$%&()*+,-./:;<=>?@[\\]^_`{|}~ "
+
+        const isLatinWord = (word) => {
+            return (!/[^a-zA-Z]/.test(word))
+        }
+
         const spellcheckOverlay = {
             token: function (stream) {
                 var ch = stream.peek();
@@ -30,7 +35,7 @@
                     stream.next();
                 }
 
-                if (dictionary && !dictionary.check(word))
+                if (dictionary && isLatinWord(word) && !dictionary.check(word))
                     return 'spell-error'; // CSS class: cm-spell-error
 
                 return null;

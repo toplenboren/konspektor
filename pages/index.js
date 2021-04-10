@@ -15,12 +15,26 @@ export default function Home() {
 
     const BACKUP_TEXT_NAME = 'k0nsp3kt0r__t3XXXt'
 
-    const START_TEXT = '# I love React'
+    const START_TEXT = `# Привет, это конспектор,
+    
+![](cat.jpg)
+    
+## Я инструмент для ведения конспектов.
+
+Я умею:
+
+* **Подсвечивать** маркдаун
+* **Проверять** орфографию, пока только для английского языка
+* **Показывать** превью маркдауна (gfm) _(кнопочки слева)_
+* **Скачивать** и копировать в буфер обмена _(кнопочки справа)_
+
+> Я разрабатываюсь [здесь](https://github.com/toplenboren/konspektor), хочешь меня поменять — оставь pull-request
+`
 
     const DISPLAY_MODES = {
-        'edit':'edit',
-        'both':'both',
-        'render':'render'
+        'edit': 'edit',
+        'both': 'both',
+        'render': 'render'
     }
 
     const [text, setText] = useState(START_TEXT)
